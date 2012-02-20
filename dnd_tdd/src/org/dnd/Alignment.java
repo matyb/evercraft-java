@@ -4,7 +4,7 @@ import org.dnd.util.Range;
 
 public class Alignment {
 
-	private Range alignment = new Range(-200, 0, 200);
+	private Range alignment = new Range(-300, 0, 300);
 	
 	public Alignment(int alignment){
 		this.alignment.setValue(alignment);
