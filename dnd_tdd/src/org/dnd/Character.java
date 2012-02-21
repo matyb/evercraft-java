@@ -1,6 +1,6 @@
-package org.dnd;
+package src.org.dnd;
 
-import org.dnd.util.Range;
+import src.org.dnd.util.Range;
 
 public class Character {
 
@@ -50,27 +50,29 @@ public class Character {
 		return alignment.isGood();
 	}
 
-	public boolean attack(int roll, Character questCharacter) {
+	public int attack(int roll, Character questCharacter) {
+		int damageDone = 0;
 		if(doesAttackSucceed(getModifiedRoll(roll), questCharacter)){
-			questCharacter.decrementHP(1);
-			if(getModifiedRoll(roll) == 20) {
-				questCharacter.decrementHP(1);
+			damageDone++;
+			// Enforces that the damage is only doubled if it is a natural 20
+			if(roll == 20) {
+				damageDone++;
 			}
-			return true;
 		}
-		return false;
+		questCharacter.decrementHP(damageDone);
+		return damageDone;
 	}
 
 	private boolean doesAttackSucceed(int roll, Character questCharacter) {
 		return getModifiedRoll(roll) >= questCharacter.getArmor().getDefense();
 	}
 
-	private int getModifiedRoll(int roll) {
+	public int getModifiedRoll(int roll) {
 		return roll + abilities.getModifier(abilities.getStrength());
 	}
 
-	private void decrementHP(int i) {
-		hitPoints.setValue(hitPoints.getValue() - 1);
+	private void decrementHP(int hp) {
+		hitPoints.setValue(hitPoints.getValue() - hp);
 	}
 
 	public Armor getArmor() {
@@ -115,6 +117,10 @@ public class Character {
 
 	public int getCharisma() {
 		return abilities.getCharisma();
+	}
+
+	public void setStrength(int strength) {
+		abilities.setStrength(strength);		
 	}
 	
 }

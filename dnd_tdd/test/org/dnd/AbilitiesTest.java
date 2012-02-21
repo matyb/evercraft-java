@@ -1,4 +1,5 @@
-package org.dnd;
+package test.org.dnd;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
@@ -6,6 +7,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.junit.Test;
+
+import src.org.dnd.Abilities;
+import src.org.dnd.Character;
 
 
 public class AbilitiesTest {
@@ -42,5 +46,37 @@ public class AbilitiesTest {
 					scoreModifier.getValue(), (Integer)abilities.getModifier(scoreModifier.getKey()));
 		}
 	}
+	
+	@Test
+	public void testStrengthModifierAddsToRoll() throws Exception {
+		Character questCharacter = new Character();
+		questCharacter.setStrength(20);
+		int roll = 10;
+		assertEquals(roll + 5, questCharacter.getModifiedRoll(roll));
+	}
+	
+	@Test
+	public void testStrengthModifierCantMakeRollGreaterThan20() throws Exception {
+		Character questCharacter = new Character();
+		questCharacter.setStrength(20);
+		int roll = 16;
+		assertEquals(20, questCharacter.getModifiedRoll(roll));
+	}
+	
+	@Test
+	public void testStrengthModifierCantMakeRollLowerThan0() throws Exception {
+		Character questCharacter = new Character();
+		questCharacter.setStrength(1);
+		int roll = 4;
+		assertEquals(0, questCharacter.getModifiedRoll(roll));
+	}
 
+	@Test
+	public void testStrengthModifierAddsToDamageDealt() throws Exception {
+		Character me = new Character();
+		Character you = new Character();
+		me.setStrength(20);
+		int roll = 16;
+		assertEquals(6, me.attack(roll, you));
+	}
 }

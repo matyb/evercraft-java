@@ -1,11 +1,11 @@
-package org.dnd;
+package test.org.dnd;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.dnd.Character;
 import org.junit.Test;
 
+import src.org.dnd.Character;
 
 public class CharacterTest {
 
@@ -89,26 +89,26 @@ public class CharacterTest {
 	public void testCharacterAttackSucceeds_withRollExceedingArmorValue(){
 		Character questCharacter = new Character();
 		int roll = questCharacter.getArmor().getDefense() + 1;
-		assertTrue(questCharacter.attack(roll, new Character()));
+		assertEquals(1, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackSucceeds_withRollMeetingArmorValue(){
 		Character questCharacter = new Character();
 		int roll = questCharacter.getArmor().getDefense();
-		assertTrue(questCharacter.attack(roll, new Character()));
+		assertEquals(1, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackFails_withRollLessThanArmorValue(){
 		Character questCharacter = new Character();
 		int roll = questCharacter.getArmor().getDefense() - 1;
-		assertFalse(questCharacter.attack(roll, new Character()));
+		assertEquals(0, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackSucceeds_withHighRoll(){
-		assertTrue(new Character().attack(20, new Character()));
+		assertEquals(2, new Character().attack(20, new Character()));
 	}
 	
 	@Test

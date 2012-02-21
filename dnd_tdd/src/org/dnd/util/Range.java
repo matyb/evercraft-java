@@ -1,4 +1,4 @@
-package org.dnd.util;
+package src.org.dnd.util;
 
 public class Range {
 

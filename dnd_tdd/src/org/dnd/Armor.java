@@ -1,6 +1,6 @@
-package org.dnd;
+package src.org.dnd;
 
-import org.dnd.util.Range;
+import src.org.dnd.util.Range;
 
 public class Armor {
 
