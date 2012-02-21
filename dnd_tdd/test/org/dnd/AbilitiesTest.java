@@ -101,4 +101,24 @@ public class AbilitiesTest {
 		me.setStrength(1);
 		assertEquals(1, me.attack(20, you));
 	}
+	
+	@Test
+	public void testDexterityModifierAddedToArmorClass_DefaultNoBonus() throws Exception {
+		Character me = new Character();
+		assertEquals(10, me.getArmor().getDefense());
+	}
+	
+	@Test
+	public void testDexterityModifierAddedToArmorClass_HighBound() throws Exception {
+		Character me = new Character();
+		me.setDexterity(20);
+		assertEquals(15, me.getArmor().getDefense());
+	}
+	
+	@Test
+	public void testDexterityModifierAddedToArmorClass_LowhBound() throws Exception {
+		Character me = new Character();
+		me.setDexterity(1);
+		assertEquals(5, me.getArmor().getDefense());
+	}
 }

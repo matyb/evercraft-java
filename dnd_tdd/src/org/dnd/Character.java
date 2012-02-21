@@ -141,5 +141,8 @@ public class Character {
 	public void setStrength(int strength) {
 		abilities.setStrength(strength);		
 	}
-	
+
+	public void setDexterity(int dexterity) {
+		abilities.setDexterity(dexterity);
+	}
 }
