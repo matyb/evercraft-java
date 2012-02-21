@@ -194,4 +194,18 @@ public class CharacterTest {
 		me.addToCurrentXP(2000);
 		assertEquals(3, me.getLevel());
 	}
+	
+	@Test
+	public void testEveryLevelIncreasesBaseHPBy5() throws Exception {
+		Character me = new Character();
+		me.setLevel(2);
+		assertEquals(10, me.getHP());
+	}
+	
+	@Test
+	public void testForEveryEvenLevelAddOneToRoll() throws Exception {
+		Character me = new Character();
+		me.setLevel(2);
+		assertEquals(11, me.getModifiedRoll(10));
+	}
 }

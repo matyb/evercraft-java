@@ -186,7 +186,7 @@ public class Character {
 		return level.getValue();
 	}
 
-	public void setLevel(Range level) {
-		this.level = level;
+	public void setLevel(int level) {
+		this.level.setValue(level);
 	}
 }
