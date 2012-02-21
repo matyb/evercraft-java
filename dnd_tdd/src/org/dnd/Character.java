@@ -55,6 +55,10 @@ public class Character {
 	public int getCurrentXP() {
 		return xp.getExperience();
 	}
+	
+	public void addToCurrentXP(int points) {
+		xp.setExperience(xp.getExperience() + points);
+	}
 
 	public int attack(int roll, Character questCharacter) {
 		int damageDone = 0;
@@ -65,6 +69,7 @@ public class Character {
 			} else {
 				damageDone += getModifiedDamage(1, false);
 			}
+			addToCurrentXP(10);
 		}
 		questCharacter.decrementHP(damageDone);
 		return damageDone;

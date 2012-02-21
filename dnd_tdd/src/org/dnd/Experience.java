@@ -13,4 +13,8 @@ public class Experience {
 	public int getExperience() {
 		return experience.getValue();
 	}
+	
+	public void setExperience(int value) {
+		experience.setValue(value);
+	}
 }
