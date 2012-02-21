@@ -1,4 +1,5 @@
 package org.dnd;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -179,5 +180,18 @@ public class CharacterTest {
 	@Test
 	public void testAbilityDesfaultValue_Charisma() throws Exception {
 		assertEquals(10, new Character().getCharisma());
+	}
+	
+	@Test
+	public void testNewCharacterDefaultsToLevel1() throws Exception {
+		Character me = new Character();
+		assertEquals(1, me.getLevel());
+	}
+	
+	@Test
+	public void testEvery1000HitPointsLevelsUpCharacter() throws Exception {
+		Character me = new Character();
+		me.addToCurrentXP(2000);
+		assertEquals(3, me.getLevel());
 	}
 }

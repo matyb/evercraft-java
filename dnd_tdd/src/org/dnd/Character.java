@@ -5,6 +5,7 @@ import org.dnd.util.Range;
 public class Character {
 
 	private String name;
+	private Range level;
 	private Range hitPoints;
 	private Armor armor;
 	private Experience xp;
@@ -173,5 +174,13 @@ public class Character {
 
 	public void setConstitution(int constitution) {
 		abilities.setConstitution(constitution);
+	}
+
+	public Range getLevel() {
+		return level;
+	}
+
+	public void setLevel(Range level) {
+		this.level = level;
 	}
 }
