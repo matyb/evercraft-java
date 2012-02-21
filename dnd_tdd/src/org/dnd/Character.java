@@ -75,7 +75,7 @@ public class Character {
 			damage += abilities.getModifier(abilities.getStrength());
 		}
 		
-		return Math.max(0, damage);
+		return Math.max(1, damage);
 	}
 	
 	public int getModifiedRoll(int roll) {
