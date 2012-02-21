@@ -6,13 +6,20 @@ public class Abilities {
 
 	private Range strength, dexterity, constitution, wisdom, intelligence, charisma;
 
+	public static int MINIMUM_ABILITY_VALUE = 1;
+	public static int MAXIMUM_ABILITY_VALUE = 20;
+	
 	public Abilities(int defaultValue){
-		strength = new Range(0, defaultValue, Integer.MAX_VALUE);
-		dexterity = new Range(0, defaultValue, Integer.MAX_VALUE); 
-		constitution = new Range(0, defaultValue, Integer.MAX_VALUE);
-		wisdom = new Range(0, defaultValue, Integer.MAX_VALUE);
-		intelligence = new Range(0, defaultValue, Integer.MAX_VALUE);
-		charisma = new Range(0, defaultValue, Integer.MAX_VALUE);
+		strength = createAbility(defaultValue);
+		dexterity = createAbility(defaultValue); 
+		constitution = createAbility(defaultValue);
+		wisdom = createAbility(defaultValue);
+		intelligence = createAbility(defaultValue);
+		charisma = createAbility(defaultValue);
+	}
+
+	protected Range createAbility(int defaultValue) {
+		return new Range(MINIMUM_ABILITY_VALUE, defaultValue, MAXIMUM_ABILITY_VALUE);
 	}
 	
 	public int getStrength() {
@@ -64,11 +71,7 @@ public class Abilities {
 	}
 
 	public int getModifier(int value) {
-		int minusTen = value - 10;
-		if(minusTen != 1){
-			minusTen += minusTen < 0 ? -1 : 1;
-		}
-		return (minusTen) / 2;
+		return value/2 - 5;
 	}
 
 }

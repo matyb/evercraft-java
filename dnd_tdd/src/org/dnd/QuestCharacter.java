@@ -18,7 +18,7 @@ public class QuestCharacter {
 		this.setName(name);
 		this.setArmor(new Armor());
 		this.alignment = new Alignment(0);
-		this.hitPoints =  new Range(0, 5, Integer.MAX_VALUE);
+		this.hitPoints = new Range(0, 5, Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
 	}
 	
