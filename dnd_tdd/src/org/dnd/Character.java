@@ -53,7 +53,7 @@ public class Character {
 	public int attack(int roll, Character questCharacter) {
 		int damageDone = 0;
 		if(doesAttackSucceed(getModifiedRoll(roll), questCharacter)){
-			damageDone++;
+			damageDone += getModifiedDamage(1);
 			// Enforces that the damage is only doubled if it is a natural 20
 			if(roll == 20) {
 				damageDone++;
@@ -67,8 +67,20 @@ public class Character {
 		return getModifiedRoll(roll) >= questCharacter.getArmor().getDefense();
 	}
 
+	public int getModifiedDamage(int damage) {
+		return Math.max(0, damage + abilities.getModifier(abilities.getStrength()));
+	}
+	
 	public int getModifiedRoll(int roll) {
-		return roll + abilities.getModifier(abilities.getStrength());
+		int modifiedRoll = roll + abilities.getModifier(abilities.getStrength());
+		
+		if(modifiedRoll > 0) {
+			modifiedRoll = Math.min(modifiedRoll, 20);
+		} else {
+			modifiedRoll = 0;
+		}
+		
+		return modifiedRoll;
 	}
 
 	private void decrementHP(int hp) {
