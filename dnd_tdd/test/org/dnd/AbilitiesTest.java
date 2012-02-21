@@ -79,10 +79,11 @@ public class AbilitiesTest {
 	}
 	
 	@Test
-	public void testStrengthModifierCantMakeDamageLessThan0() throws Exception {
+	public void testStrengthModifierCantMakeDamageLessThan1() throws Exception {
 		Character me = new Character();
+		Character you = new Character();
 		me.setStrength(1);
-		assertEquals(0, me.getModifiedDamage(1));
+		assertEquals(1, me.attack(19, you));
 	}
 	
 	@Test
@@ -91,5 +92,13 @@ public class AbilitiesTest {
 		Character you = new Character();
 		me.setStrength(12);
 		assertEquals(4, me.attack(20, you));
+	}
+	
+	@Test
+	public void testStrengthModifierCantMakeDamageLessThan1EvenOnCrit() throws Exception {
+		Character me = new Character();
+		Character you = new Character();
+		me.setStrength(1);
+		assertEquals(1, me.attack(20, you));
 	}
 }

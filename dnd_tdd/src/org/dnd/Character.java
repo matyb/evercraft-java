@@ -52,11 +52,12 @@ public class Character {
 
 	public int attack(int roll, Character questCharacter) {
 		int damageDone = 0;
-		if(doesAttackSucceed(getModifiedRoll(roll), questCharacter)){
-			damageDone += getModifiedDamage(1);
-			// Enforces that the damage is only doubled if it is a natural 20
+		if(doesAttackSucceed(getModifiedRoll(roll), questCharacter)){			
+			// A "Natural" Roll of 20 is a Critical Hit
 			if(roll == 20) {
-				damageDone++;
+				damageDone += getModifiedDamage(2, true);
+			} else {
+				damageDone += getModifiedDamage(1, false);
 			}
 		}
 		questCharacter.decrementHP(damageDone);
@@ -64,11 +65,17 @@ public class Character {
 	}
 
 	private boolean doesAttackSucceed(int roll, Character questCharacter) {
-		return getModifiedRoll(roll) >= questCharacter.getArmor().getDefense();
+		return roll >= questCharacter.getArmor().getDefense();
 	}
 
-	public int getModifiedDamage(int damage) {
-		return Math.max(0, damage + abilities.getModifier(abilities.getStrength()));
+	private int getModifiedDamage(int damage, boolean crit) {
+		if(crit) {
+			damage += abilities.getModifier(abilities.getStrength()) * 2;
+		} else {
+			damage += abilities.getModifier(abilities.getStrength());
+		}
+		
+		return Math.max(0, damage);
 	}
 	
 	public int getModifiedRoll(int roll) {
