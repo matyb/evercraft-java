@@ -95,7 +95,11 @@ public class Character {
 	}
 
 	public int getDefense() {
-		return armor.getDefense() + abilities.getModifier(abilities.getDexterity());
+		return Math.max(0,armor.getDefense() + abilities.getModifier(abilities.getDexterity()));
+	}
+
+	public void setDefense(int defense) {
+		armor.setDefense(defense);
 	}
 	
 	public void setArmor(Armor armor) {
@@ -107,7 +111,17 @@ public class Character {
 	}
 
 	public int getHP() {
-		return hitPoints.getValue();
+		
+		if(hitPoints.getValue() == 0) {
+			return 0;
+		}
+		
+		int constitutionModifier = abilities.getModifier(abilities.getConstitution());		
+		if(hitPoints.getValue() + constitutionModifier < 1) {
+			return 1;
+		}
+		
+		return hitPoints.getValue() + constitutionModifier;
 	}
 	
 	public boolean isDead() {

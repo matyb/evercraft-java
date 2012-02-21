@@ -123,6 +123,14 @@ public class AbilitiesTest {
 	}
 	
 	@Test
+	public void testDexterityModifierAddedToArmorClass_GreaterThanOrEqual0() throws Exception {
+		Character me = new Character();
+		me.setDefense(1);
+		me.setDexterity(1);
+		assertEquals(0, me.getDefense());
+	}
+	
+	@Test
 	public void testConstitutionModifierAddedToHP_HighBound() throws Exception {
 		Character me = new Character();
 		me.setConstitution(20);
