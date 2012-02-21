@@ -116,9 +116,23 @@ public class AbilitiesTest {
 	}
 	
 	@Test
-	public void testDexterityModifierAddedToArmorClass_LowhBound() throws Exception {
+	public void testDexterityModifierAddedToArmorClass_LowBound() throws Exception {
 		Character me = new Character();
 		me.setDexterity(1);
 		assertEquals(5, me.getDefense());
+	}
+	
+	@Test
+	public void testConstitutionModifierAddedToHP_HighBound() throws Exception {
+		Character me = new Character();
+		me.setConstitution(20);
+		assertEquals(10, me.getHP());
+	}
+	
+	@Test
+	public void testConstitutionModifierAddedToHP_LowBound() throws Exception {
+		Character me = new Character();
+		me.setConstitution(1);
+		assertEquals(1, me.getHP());
 	}
 }

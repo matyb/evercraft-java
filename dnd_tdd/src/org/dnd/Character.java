@@ -145,4 +145,8 @@ public class Character {
 	public void setDexterity(int dexterity) {
 		abilities.setDexterity(dexterity);
 	}
+
+	public void setConstitution(int constitution) {
+		abilities.setConstitution(constitution);
+	}
 }
