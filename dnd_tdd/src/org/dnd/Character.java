@@ -65,7 +65,7 @@ public class Character {
 	}
 
 	private boolean doesAttackSucceed(int roll, Character questCharacter) {
-		return roll >= questCharacter.getArmor().getDefense();
+		return roll >= questCharacter.getDefense();
 	}
 
 	private int getModifiedDamage(int damage, boolean crit) {
@@ -94,10 +94,10 @@ public class Character {
 		hitPoints.setValue(hitPoints.getValue() - hp);
 	}
 
-	public Armor getArmor() {
-		return armor;
+	public int getDefense() {
+		return armor.getDefense() + abilities.getModifier(abilities.getDexterity());
 	}
-
+	
 	public void setArmor(Armor armor) {
 		this.armor = armor;
 	}

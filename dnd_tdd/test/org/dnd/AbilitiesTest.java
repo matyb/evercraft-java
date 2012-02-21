@@ -105,20 +105,20 @@ public class AbilitiesTest {
 	@Test
 	public void testDexterityModifierAddedToArmorClass_DefaultNoBonus() throws Exception {
 		Character me = new Character();
-		assertEquals(10, me.getArmor().getDefense());
+		assertEquals(10, me.getDefense());
 	}
 	
 	@Test
 	public void testDexterityModifierAddedToArmorClass_HighBound() throws Exception {
 		Character me = new Character();
 		me.setDexterity(20);
-		assertEquals(15, me.getArmor().getDefense());
+		assertEquals(15, me.getDefense());
 	}
 	
 	@Test
 	public void testDexterityModifierAddedToArmorClass_LowhBound() throws Exception {
 		Character me = new Character();
 		me.setDexterity(1);
-		assertEquals(5, me.getArmor().getDefense());
+		assertEquals(5, me.getDefense());
 	}
 }

@@ -86,21 +86,21 @@ public class CharacterTest {
 	@Test
 	public void testCharacterAttackSucceeds_withRollExceedingArmorValue(){
 		Character questCharacter = new Character();
-		int roll = questCharacter.getArmor().getDefense() + 1;
+		int roll = questCharacter.getDefense() + 1;
 		assertEquals(1, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackSucceeds_withRollMeetingArmorValue(){
 		Character questCharacter = new Character();
-		int roll = questCharacter.getArmor().getDefense();
+		int roll = questCharacter.getDefense();
 		assertEquals(1, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackFails_withRollLessThanArmorValue(){
 		Character questCharacter = new Character();
-		int roll = questCharacter.getArmor().getDefense() - 1;
+		int roll = questCharacter.getDefense() - 1;
 		assertEquals(0, questCharacter.attack(roll, new Character()));
 	}
 	
