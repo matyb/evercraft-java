@@ -23,6 +23,7 @@ public class Character {
 		this.hitPoints = new Range(0, 5, Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
 		this.xp = new Experience(0);
+		this.level = new Range(1, 1, Integer.MAX_VALUE);
 	}
 	
 	public String getName() {
@@ -54,11 +55,16 @@ public class Character {
 	}
 	
 	public int getCurrentXP() {
-		return xp.getExperience();
+		return xp.getCurrentExperience();
 	}
 	
-	public void addToCurrentXP(int points) {
-		xp.setExperience(xp.getExperience() + points);
+	public void addToCurrentXP(int points) {		
+		xp.setCurrentExperience(xp.getCurrentExperience() + points);
+		updateLevel();
+	}
+
+	private void updateLevel() {
+		level.setValue(xp.getTotalExperience() / 1000 + 1);
 	}
 
 	public int attack(int roll, Character questCharacter) {
@@ -176,8 +182,8 @@ public class Character {
 		abilities.setConstitution(constitution);
 	}
 
-	public Range getLevel() {
-		return level;
+	public int getLevel() {
+		return level.getValue();
 	}
 
 	public void setLevel(Range level) {

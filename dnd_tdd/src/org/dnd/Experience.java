@@ -4,17 +4,24 @@ import org.dnd.util.Range;
 
 public class Experience {
 
-	private Range experience = new Range(0, 0, Integer.MAX_VALUE);
+	private Range currentExperience = new Range(0, 0, 1000);
+	private Range totalExperience   = new Range(0, 0, Integer.MAX_VALUE);
 	
 	public Experience(int experience){
-		this.experience.setValue(experience);
+		this.currentExperience.setValue(experience);
+		this.totalExperience.setValue(experience);
 	}
 	
-	public int getExperience() {
-		return experience.getValue();
+	public int getCurrentExperience() {
+		return currentExperience.getValue();
 	}
 	
-	public void setExperience(int value) {
-		experience.setValue(value);
+	public void setCurrentExperience(int value) {
+		currentExperience.setValue(value % 1000);
+		totalExperience.setValue(totalExperience.getValue() + value);
+	}
+
+	public int getTotalExperience() {
+		return totalExperience.getValue();
 	}
 }
