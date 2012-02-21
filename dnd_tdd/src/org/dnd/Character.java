@@ -2,7 +2,7 @@ package org.dnd;
 
 import org.dnd.util.Range;
 
-public class QuestCharacter {
+public class Character {
 
 	private String name;
 	private Range hitPoints;
@@ -10,11 +10,11 @@ public class QuestCharacter {
 	private Alignment alignment;
 	private Abilities abilities;
 
-	public QuestCharacter(){
+	public Character(){
 		this("");
 	};
 	
-	public QuestCharacter(String name) {
+	public Character(String name) {
 		this.setName(name);
 		this.setArmor(new Armor());
 		this.alignment = new Alignment(0);
@@ -50,7 +50,7 @@ public class QuestCharacter {
 		return alignment.isGood();
 	}
 
-	public boolean attack(int roll, QuestCharacter questCharacter) {
+	public boolean attack(int roll, Character questCharacter) {
 		if(doesAttackSucceed(getModifiedRoll(roll), questCharacter)){
 			questCharacter.decrementHP(1);
 			if(getModifiedRoll(roll) == 20) {
@@ -61,7 +61,7 @@ public class QuestCharacter {
 		return false;
 	}
 
-	private boolean doesAttackSucceed(int roll, QuestCharacter questCharacter) {
+	private boolean doesAttackSucceed(int roll, Character questCharacter) {
 		return getModifiedRoll(roll) >= questCharacter.getArmor().getDefense();
 	}
 

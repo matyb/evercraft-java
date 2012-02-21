@@ -5,7 +5,7 @@ import org.dnd.Armor;
 import org.junit.Test;
 
 
-public class ArmorClassTest {
+public class ArmorTest {
 
 	@Test
 	public void testDefaultArmorClass() throws Exception {
