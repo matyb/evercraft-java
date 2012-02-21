@@ -84,4 +84,12 @@ public class AbilitiesTest {
 		me.setStrength(1);
 		assertEquals(0, me.getModifiedDamage(1));
 	}
+	
+	@Test
+	public void testStrengthModifierDoublesOnCriticalHits() throws Exception {
+		Character me = new Character();
+		Character you = new Character();
+		me.setStrength(12);
+		assertEquals(4, me.attack(20, you));
+	}
 }
