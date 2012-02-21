@@ -58,13 +58,14 @@ public class Character {
 		return xp.getCurrentExperience();
 	}
 	
-	public void addToCurrentXP(int points) {		
+	public void addToCurrentXP(int points) {
 		xp.setCurrentExperience(xp.getCurrentExperience() + points);
-		updateLevel();
+		updateLevelAndHP();
 	}
 
-	private void updateLevel() {
+	private void updateLevelAndHP() {
 		level.setValue(xp.getTotalExperience() / 1000 + 1);
+		hitPoints.setValue(level.getValue() * 5);
 	}
 
 	public int attack(int roll, Character questCharacter) {
@@ -105,7 +106,13 @@ public class Character {
 			modifiedRoll = 0;
 		}
 		
+		modifiedRoll += Math.floor(getLevel() / 2);
+		
 		return modifiedRoll;
+	}
+
+	public int getLevel() {
+		return level.getValue();
 	}
 
 	private void decrementHP(int hp) {
@@ -180,13 +187,5 @@ public class Character {
 
 	public void setConstitution(int constitution) {
 		abilities.setConstitution(constitution);
-	}
-
-	public int getLevel() {
-		return level.getValue();
-	}
-
-	public void setLevel(int level) {
-		this.level.setValue(level);
 	}
 }
