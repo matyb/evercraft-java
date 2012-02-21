@@ -1,6 +1,5 @@
-package src.org.dnd;
-
-import src.org.dnd.util.Range;
+package org.dnd;
+import org.dnd.util.Range;
 
 public class Abilities {
 

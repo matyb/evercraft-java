@@ -1,10 +1,8 @@
-package test.org.dnd.util;
+package org.dnd.util;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import src.org.dnd.util.Range;
 
 public class RangeTest {
 

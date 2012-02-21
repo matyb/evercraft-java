@@ -1,6 +1,6 @@
-package src.org.dnd;
+package org.dnd;
 
-import src.org.dnd.util.Range;
+import org.dnd.util.Range;
 
 public class Character {
 

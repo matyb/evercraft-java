@@ -1,15 +1,12 @@
-package test.org.dnd;
-import static org.junit.Assert.*;
+package org.dnd;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.dnd.Abilities;
 import org.junit.Test;
-
-import src.org.dnd.Abilities;
-import src.org.dnd.Character;
 
 
 public class AbilitiesTest {
