@@ -7,6 +7,7 @@ public class Character {
 	private String name;
 	private Range hitPoints;
 	private Armor armor;
+	private Experience xp;
 	private Alignment alignment;
 	private Abilities abilities;
 
@@ -20,6 +21,7 @@ public class Character {
 		this.alignment = new Alignment(0);
 		this.hitPoints = new Range(0, 5, Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
+		this.xp = new Experience(0);
 	}
 	
 	public String getName() {
@@ -48,6 +50,10 @@ public class Character {
 
 	public boolean isGood() {
 		return alignment.isGood();
+	}
+	
+	public int getCurrentXP() {
+		return xp.getExperience();
 	}
 
 	public int attack(int roll, Character questCharacter) {
