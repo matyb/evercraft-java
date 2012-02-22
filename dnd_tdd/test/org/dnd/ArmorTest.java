@@ -1,7 +1,6 @@
 package org.dnd;
 import static org.junit.Assert.assertEquals;
 
-import org.dnd.Armor;
 import org.junit.Test;
 
 
