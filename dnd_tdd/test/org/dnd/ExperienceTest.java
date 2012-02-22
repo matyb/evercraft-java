@@ -31,7 +31,7 @@ public class ExperienceTest {
 	@Test
 	public void testWhenLevelingUpExperienceIsRemainderOutOf1000() throws Exception {
 		Character me = new Character();
-		me.addToCurrentXP(2467);
+		me.addExperience(2467);
 		assertEquals(467, me.getCurrentXP());
 	}
 }
