@@ -25,5 +25,16 @@ public class Range {
 	public void setValue(int value){
 		this.value = Math.min(getMaximum(), Math.max(getMinimum(), value));
 	}
+
+	public void add(int integer) {
+		setValue(getValue() + integer);
+	}
+	
+	@Override
+	public String toString() {
+		return new StringBuilder("Range [min=").append(min).append(", value=")
+				.append(value).append(", max=").append(max).append("]").toString();
+	}
+	
 	
 }
