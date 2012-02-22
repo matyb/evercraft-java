@@ -1,5 +1,4 @@
 package org.dnd;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -191,28 +190,28 @@ public class CharacterTest {
 	@Test
 	public void testEvery1000HitPointsLevelsUpCharacter() throws Exception {
 		Character me = new Character();
-		me.addToCurrentXP(2000);
+		me.addExperience(2000);
 		assertEquals(3, me.getLevel());
 	}
 	
 	@Test
 	public void testEveryLevelIncreasesBaseHPBy5() throws Exception {
 		Character me = new Character();
-		me.addToCurrentXP(2000);
+		me.addExperience(2000);
 		assertEquals(15, me.getHP());
 	}
 	
 	@Test
 	public void testForEveryEvenLevelAddOneToRoll_EvenLevel() throws Exception {
 		Character me = new Character();
-		me.addToCurrentXP(1000);
+		me.addExperience(1000);
 		assertEquals(11, me.getModifiedRoll(10));
 	}
 	
 	@Test
 	public void testForEveryEvenLevelAddOneToRoll_OddLevel() throws Exception {
 		Character me = new Character();
-		me.addToCurrentXP(2000);
+		me.addExperience(2000);
 		assertEquals(11, me.getModifiedRoll(10));
 	}
 }
