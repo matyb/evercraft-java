@@ -5,7 +5,6 @@ import org.dnd.util.Range;
 public class Character {
 
 	private String name;
-	private Range level;
 	private Range hitPoints;
 	private Armor armor;
 	private Experience xp;
@@ -23,7 +22,6 @@ public class Character {
 		this.hitPoints = new Range(0, 5, Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
 		this.xp = new Experience(0);
-		this.level = new Range(1, 1, Integer.MAX_VALUE);
 	}
 	
 	public String getName() {
@@ -58,42 +56,44 @@ public class Character {
 		return xp.getCurrentExperience();
 	}
 	
-	public void addToCurrentXP(int points) {
-		xp.setCurrentExperience(xp.getCurrentExperience() + points);
-		updateLevelAndHP();
+	public void addExperience(int points) {
+		int oldLevel = getLevel();
+		
+		xp.addToExperience(points);
+		
+		int levelsGained = getLevel() - oldLevel;
+		for(int level = 0; level < levelsGained; level++) { // only if level gained
+			levelGained();
+		}
+	}
+	
+	protected void levelGained(){
+		hitPoints.add(5 + abilities.getModifier(getConstitution()));
 	}
 
-	private void updateLevelAndHP() {
-		level.setValue(xp.getTotalExperience() / 1000 + 1);
-		hitPoints.setValue(level.getValue() * 5);
-	}
-
-	public int attack(int roll, Character questCharacter) {
+	public int attack(int roll, Character opposingCharacter) {
 		int damageDone = 0;
-		if(doesAttackSucceed(getModifiedRoll(roll), questCharacter)){			
+		if(isAttackSuccessful(getModifiedRoll(roll), opposingCharacter)){			
 			// A "Natural" Roll of 20 is a Critical Hit
 			if(roll == 20) {
 				damageDone += getModifiedDamage(2, true);
 			} else {
 				damageDone += getModifiedDamage(1, false);
 			}
-			addToCurrentXP(10);
+			addExperience(10);
 		}
-		questCharacter.decrementHP(damageDone);
+		opposingCharacter.decrementHP(damageDone);
 		return damageDone;
 	}
 
-	private boolean doesAttackSucceed(int roll, Character questCharacter) {
+	private boolean isAttackSuccessful(int roll, Character questCharacter) {
 		return roll >= questCharacter.getDefense();
 	}
 
 	private int getModifiedDamage(int damage, boolean crit) {
-		if(crit) {
-			damage += abilities.getModifier(abilities.getStrength()) * 2;
-		} else {
-			damage += abilities.getModifier(abilities.getStrength());
-		}
-		
+		int stengthModifier = abilities.getModifier(abilities.getStrength());
+		int strengthMultiplier = crit ? 2 : 1;
+		damage += stengthModifier * strengthMultiplier;
 		return Math.max(1, damage);
 	}
 	
@@ -112,15 +112,15 @@ public class Character {
 	}
 
 	public int getLevel() {
-		return level.getValue();
+		return xp.getLevel();
 	}
 
 	private void decrementHP(int hp) {
-		hitPoints.setValue(hitPoints.getValue() - hp);
+		hitPoints.add(-hp);
 	}
 
 	public int getDefense() {
-		return Math.max(0,armor.getDefense() + abilities.getModifier(abilities.getDexterity()));
+		return Math.max(0, armor.getDefense() + abilities.getModifier(abilities.getDexterity()));
 	}
 
 	public void setDefense(int defense) {
