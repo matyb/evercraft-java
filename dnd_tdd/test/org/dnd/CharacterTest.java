@@ -1,11 +1,10 @@
 package org.dnd;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.dnd.Character;
 import org.junit.Test;
-
 
 public class CharacterTest {
 
@@ -88,27 +87,27 @@ public class CharacterTest {
 	@Test
 	public void testCharacterAttackSucceeds_withRollExceedingArmorValue(){
 		Character questCharacter = new Character();
-		int roll = questCharacter.getArmor().getDefense() + 1;
-		assertTrue(questCharacter.attack(roll, new Character()));
+		int roll = questCharacter.getDefense() + 1;
+		assertEquals(1, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackSucceeds_withRollMeetingArmorValue(){
 		Character questCharacter = new Character();
-		int roll = questCharacter.getArmor().getDefense();
-		assertTrue(questCharacter.attack(roll, new Character()));
+		int roll = questCharacter.getDefense();
+		assertEquals(1, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackFails_withRollLessThanArmorValue(){
 		Character questCharacter = new Character();
-		int roll = questCharacter.getArmor().getDefense() - 1;
-		assertFalse(questCharacter.attack(roll, new Character()));
+		int roll = questCharacter.getDefense() - 1;
+		assertEquals(0, questCharacter.attack(roll, new Character()));
 	}
 	
 	@Test
 	public void testCharacterAttackSucceeds_withHighRoll(){
-		assertTrue(new Character().attack(20, new Character()));
+		assertEquals(2, new Character().attack(20, new Character()));
 	}
 	
 	@Test
@@ -181,5 +180,39 @@ public class CharacterTest {
 	@Test
 	public void testAbilityDesfaultValue_Charisma() throws Exception {
 		assertEquals(10, new Character().getCharisma());
+	}
+	
+	@Test
+	public void testNewCharacterDefaultsToLevel1() throws Exception {
+		Character me = new Character();
+		assertEquals(1, me.getLevel());
+	}
+	
+	@Test
+	public void testEvery1000HitPointsLevelsUpCharacter() throws Exception {
+		Character me = new Character();
+		me.addToCurrentXP(2000);
+		assertEquals(3, me.getLevel());
+	}
+	
+	@Test
+	public void testEveryLevelIncreasesBaseHPBy5() throws Exception {
+		Character me = new Character();
+		me.addToCurrentXP(2000);
+		assertEquals(15, me.getHP());
+	}
+	
+	@Test
+	public void testForEveryEvenLevelAddOneToRoll_EvenLevel() throws Exception {
+		Character me = new Character();
+		me.addToCurrentXP(1000);
+		assertEquals(11, me.getModifiedRoll(10));
+	}
+	
+	@Test
+	public void testForEveryEvenLevelAddOneToRoll_OddLevel() throws Exception {
+		Character me = new Character();
+		me.addToCurrentXP(2000);
+		assertEquals(11, me.getModifiedRoll(10));
 	}
 }

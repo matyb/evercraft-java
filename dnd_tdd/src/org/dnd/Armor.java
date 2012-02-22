@@ -10,4 +10,7 @@ public class Armor {
 		return defense.getValue();
 	}
 
+	public void setDefense(int defense) {
+		this.defense.setValue(defense);
+	}
 }

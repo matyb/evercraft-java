@@ -2,6 +2,7 @@ package org.dnd;
 
 import org.dnd.util.Range;
 
+
 public class Alignment {
 
 	private Range alignment = new Range(-300, 0, 300);

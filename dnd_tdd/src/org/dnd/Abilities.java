@@ -1,5 +1,4 @@
 package org.dnd;
-
 import org.dnd.util.Range;
 
 public class Abilities {
