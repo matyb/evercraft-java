@@ -85,14 +85,6 @@ public class AbilitiesTest {
 	}
 	
 	@Test
-	public void testStrengthModifierDoublesOnCriticalHits() throws Exception {
-		Character me = new Character();
-		Character you = new Character();
-		me.setStrength(12);
-		assertEquals(4, me.attack(20, you));
-	}
-	
-	@Test
 	public void testStrengthModifierCantMakeDamageLessThan1EvenOnCrit() throws Exception {
 		Character me = new Character();
 		Character you = new Character();

@@ -106,7 +106,7 @@ public class CharacterTest {
 	
 	@Test
 	public void testCharacterAttackSucceeds_withHighRoll(){
-		assertEquals(2, new Character().attack(20, new Character()));
+		assertEquals(4, new Character().attack(20, new Character()));
 	}
 	
 	@Test
@@ -127,7 +127,7 @@ public class CharacterTest {
 	public void testNaturalTwentyDealsDoubleDamage() throws Exception {
 		Character you = new Character();
 		new Character().attack(20, you);
-		assertEquals(3, you.getHP());
+		assertEquals(1, you.getHP());
 	}
 	
 	@Test
