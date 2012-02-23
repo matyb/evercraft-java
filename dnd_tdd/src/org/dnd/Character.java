@@ -19,11 +19,15 @@ public class Character {
 		this.setName(name);
 		this.setArmor(new Armor());
 		this.alignment = new Alignment(0);
-		this.hitPoints = new Range(0, 5, Integer.MAX_VALUE);
+		this.hitPoints = new Range(0, getHPModifier(), Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
 		this.xp = new Experience(0);
 	}
 	
+	protected int getHPModifier() {
+		return 5;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -68,7 +72,7 @@ public class Character {
 	}
 	
 	protected void levelGained(){
-		hitPoints.add(5 + abilities.getModifier(getConstitution()));
+		hitPoints.add(getHPModifier() + abilities.getModifier(getConstitution()));
 	}
 
 	public int attack(int roll, Character opposingCharacter) {
@@ -86,17 +90,20 @@ public class Character {
 		return damageDone;
 	}
 
-	private boolean isAttackSuccessful(int roll, Character questCharacter) {
-		return roll >= questCharacter.getDefense();
+	private boolean isAttackSuccessful(int roll, Character opposingCharacter) {
+		return roll >= opposingCharacter.getDefense();
 	}
 
-	private int getModifiedDamage(int damage, boolean crit) {
-		int stengthModifier = abilities.getModifier(abilities.getStrength());
-		int strengthMultiplier = crit ? 2 : 1;
-		damage += stengthModifier * strengthMultiplier;
+	public int getModifiedDamage(int damage, boolean crit) {
+		damage += abilities.getModifier(abilities.getStrength());
+		damage *= crit ? getCritMultiplier() : 1;
 		return Math.max(1, damage);
 	}
 	
+	public int getCritMultiplier() {
+		return 2;
+	}
+
 	public int getModifiedRoll(int roll) {
 		int modifiedRoll = roll + abilities.getModifier(abilities.getStrength());
 		
@@ -106,9 +113,14 @@ public class Character {
 			modifiedRoll = 0;
 		}
 		
-		modifiedRoll += Math.floor(getLevel() / 2);
+		modifiedRoll += getRollModifier();
 		
 		return modifiedRoll;
+	}
+	
+	public int getRollModifier()
+	{
+		return (int) Math.floor(getLevel() / 2);
 	}
 
 	public int getLevel() {
