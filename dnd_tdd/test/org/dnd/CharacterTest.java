@@ -200,18 +200,4 @@ public class CharacterTest {
 		me.addExperience(2000);
 		assertEquals(15, me.getHP());
 	}
-	
-	@Test
-	public void testForEveryEvenLevelAddOneToRoll_EvenLevel() throws Exception {
-		Character me = new Character();
-		me.addExperience(1000);
-		assertEquals(11, me.getModifiedRoll(10));
-	}
-	
-	@Test
-	public void testForEveryEvenLevelAddOneToRoll_OddLevel() throws Exception {
-		Character me = new Character();
-		me.addExperience(2000);
-		assertEquals(11, me.getModifiedRoll(10));
-	}
 }

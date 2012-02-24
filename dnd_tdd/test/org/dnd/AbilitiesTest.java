@@ -42,30 +42,6 @@ public class AbilitiesTest {
 					scoreModifier.getValue(), (Integer)abilities.getModifier(scoreModifier.getKey()));
 		}
 	}
-	
-	@Test
-	public void testStrengthModifierAddsToRoll() throws Exception {
-		Character questCharacter = new Character();
-		questCharacter.setStrength(20);
-		int roll = 10;
-		assertEquals(roll + 5, questCharacter.getModifiedRoll(roll));
-	}
-	
-	@Test
-	public void testStrengthModifierCantMakeRollGreaterThan20() throws Exception {
-		Character questCharacter = new Character();
-		questCharacter.setStrength(20);
-		int roll = 16;
-		assertEquals(20, questCharacter.getModifiedRoll(roll));
-	}
-	
-	@Test
-	public void testStrengthModifierCantMakeRollLowerThan0() throws Exception {
-		Character questCharacter = new Character();
-		questCharacter.setStrength(1);
-		int roll = 4;
-		assertEquals(0, questCharacter.getModifiedRoll(roll));
-	}
 
 	@Test
 	public void testStrengthModifierAddsToDamageDealt() throws Exception {

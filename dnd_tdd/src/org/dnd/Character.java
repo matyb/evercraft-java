@@ -1,33 +1,44 @@
 package org.dnd;
 
+import org.dnd.Class.ClassType;
 import org.dnd.util.Range;
 
 public class Character {
 
+	private Class classType;
 	private String name;
 	private Range hitPoints;
-	private Armor armor;
+	private Defense armor;
 	private Experience xp;
 	private Alignment alignment;
 	private Abilities abilities;
+
+	public Abilities getAbilities() {
+		return abilities;
+	}
+
+	public void setAbilities(Abilities abilities) {
+		this.abilities = abilities;
+	}
 
 	public Character(){
 		this("");
 	};
 	
 	public Character(String name) {
+		this(name, ClassType.DEFAULT);
+	}
+
+	public Character(String name, ClassType type) {
 		this.setName(name);
-		this.setArmor(new Armor());
+		this.setArmor(new Defense());
+		this.classType = Class.getClassFromMap(type);
 		this.alignment = new Alignment(0);
-		this.hitPoints = new Range(0, getHPModifier(), Integer.MAX_VALUE);
+		this.hitPoints = new Range(0, classType.getHPModifier(), Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
 		this.xp = new Experience(0);
 	}
 	
-	protected int getHPModifier() {
-		return 5;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -72,74 +83,30 @@ public class Character {
 	}
 	
 	protected void levelGained(){
-		hitPoints.add(getHPModifier() + abilities.getModifier(getConstitution()));
+		hitPoints.add(classType.getHPModifier() + abilities.getModifier(getConstitution()));
 	}
 
-	public int attack(int roll, Character opposingCharacter) {
-		int damageDone = 0;
-		if(isAttackSuccessful(getModifiedRoll(roll), opposingCharacter)){			
-			// A "Natural" Roll of 20 is a Critical Hit
-			if(roll == 20) {
-				damageDone += getModifiedDamage(2, true);
-			} else {
-				damageDone += getModifiedDamage(1, false);
-			}
-			addExperience(10);
-		}
-		opposingCharacter.decrementHP(damageDone);
-		return damageDone;
-	}
-
-	private boolean isAttackSuccessful(int roll, Character opposingCharacter) {
-		return roll >= opposingCharacter.getDefense();
-	}
-
-	public int getModifiedDamage(int damage, boolean crit) {
-		damage += abilities.getModifier(abilities.getStrength());
-		damage *= crit ? getCritMultiplier() : 1;
-		return Math.max(1, damage);
-	}
-	
-	public int getCritMultiplier() {
-		return 2;
-	}
-
-	public int getModifiedRoll(int roll) {
-		int modifiedRoll = roll + abilities.getModifier(abilities.getStrength());
-		
-		if(modifiedRoll > 0) {
-			modifiedRoll = Math.min(modifiedRoll, 20);
-		} else {
-			modifiedRoll = 0;
-		}
-		
-		modifiedRoll += getRollModifier();
-		
-		return modifiedRoll;
-	}
-	
-	public int getRollModifier()
-	{
-		return (int) Math.floor(getLevel() / 2);
+	public int attack(int attackRoll, Character opposingCharacter) {
+		return new CombatSimulator().fight(this, opposingCharacter, attackRoll);
 	}
 
 	public int getLevel() {
 		return xp.getLevel();
 	}
 
-	private void decrementHP(int hp) {
+	public void decrementHP(int hp) {
 		hitPoints.add(-hp);
 	}
 
 	public int getDefense() {
-		return Math.max(0, armor.getDefense() + abilities.getModifier(abilities.getDexterity()));
+		return Math.max(0, armor.getArmor() + abilities.getModifier(abilities.getDexterity()));
 	}
 
 	public void setDefense(int defense) {
-		armor.setDefense(defense);
+		armor.setArmor(defense);
 	}
 	
-	public void setArmor(Armor armor) {
+	public void setArmor(Defense armor) {
 		this.armor = armor;
 	}
 
@@ -199,5 +166,13 @@ public class Character {
 
 	public void setConstitution(int constitution) {
 		abilities.setConstitution(constitution);
+	}
+
+	public Class getClassType() {
+		return classType;
+	}
+
+	public void setClassType(Class classType) {
+		this.classType = classType;
 	}
 }
