@@ -1,6 +1,7 @@
 package org.dnd;
 import static org.junit.Assert.assertEquals;
 
+import org.dnd.character.Character;
 import org.junit.Test;
 
 

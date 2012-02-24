@@ -1,11 +1,26 @@
-package org.dnd;
+package org.dnd.character;
 
-import org.dnd.Class.ClassType;
+import org.dnd.CombatSimulator;
+import org.dnd.character.classes.Class;
+import org.dnd.character.classes.Class.ClassType;
+import org.dnd.character.classes.Fighter;
+import org.dnd.character.classes.Rogue;
+import org.dnd.character.races.Human;
+import org.dnd.character.races.Race;
+import org.dnd.character.races.Race.RaceType;
+import org.dnd.util.Dice;
 import org.dnd.util.Range;
 
 public class Character {
 
+	private static enum Gender { MALE, FEMALE };
+	
+	private Gender gender;
+	private int weight; // lbs
+	private int height; // inches
+	private int age;
 	private Class classType;
+	private Race raceType;
 	private String name;
 	private Range hitPoints;
 	private Defense armor;
@@ -26,17 +41,19 @@ public class Character {
 	};
 	
 	public Character(String name) {
-		this(name, ClassType.DEFAULT);
+		this(name, ClassType.DEFAULT, RaceType.DEFAULT);
 	}
 
-	public Character(String name, ClassType type) {
+	public Character(String name, ClassType classType, RaceType raceType) {
 		this.setName(name);
 		this.setArmor(new Defense());
-		this.classType = Class.getClassFromMap(type);
+		this.classType = Class.getClassFromMap(classType);
+		this.raceType  = Race.getRaceFromMap(raceType);
 		this.alignment = new Alignment(0);
-		this.hitPoints = new Range(0, classType.getHPModifier(), Integer.MAX_VALUE);
+		this.hitPoints = new Range(0, this.classType.getHPModifier(), Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
 		this.xp = new Experience(0);
+		this.setAge(generateAge());
 	}
 	
 	public String getName() {
@@ -131,6 +148,15 @@ public class Character {
 	
 	public boolean isDead() {
 		return getHP() <= 0;
+	}		
+	
+	private int generateAge() {
+		if(raceType.getClass() == Human.class && classType.getClass() == Rogue.class) {
+			return Dice.roll(1, 4, 15);
+		} else if(raceType.getClass() == Human.class && classType.getClass() == Fighter.class) {
+			return Dice.roll(1, 6, 15);
+		}
+		return 0 ;
 	}
 
 	public int getStrength() {
@@ -175,5 +201,21 @@ public class Character {
 
 	public void setClassType(Class classType) {
 		this.classType = classType;
+	}
+
+	public Race getRaceType() {
+		return raceType;
+	}
+
+	public void setRaceType(Race raceType) {
+		this.raceType = raceType;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 }

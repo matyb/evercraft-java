@@ -1,4 +1,4 @@
-package org.dnd;
+package org.dnd.character.classes;
 
 public class Rogue extends Class {
 

@@ -1,4 +1,4 @@
-package org.dnd;
+package org.dnd.character;
 
 import org.dnd.util.Range;
 

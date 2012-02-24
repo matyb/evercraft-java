@@ -1,8 +1,10 @@
-package org.dnd;
+package org.dnd.character;
 import org.dnd.util.Range;
 
 public class Abilities {
 
+	public static enum AbilityType { STRENGTH, DEXTERITY, CONSTITUTION, WISDOM, INTELLIGENCE, CHARISMA };
+	
 	private Range strength, dexterity, constitution, wisdom, intelligence, charisma;
 
 	public static int MINIMUM_ABILITY_VALUE = 1;
@@ -16,7 +18,7 @@ public class Abilities {
 		intelligence = createAbility(defaultValue);
 		charisma = createAbility(defaultValue);
 	}
-
+	
 	protected Range createAbility(int defaultValue) {
 		return new Range(MINIMUM_ABILITY_VALUE, defaultValue, MAXIMUM_ABILITY_VALUE);
 	}

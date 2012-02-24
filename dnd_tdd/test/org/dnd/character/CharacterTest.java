@@ -1,8 +1,12 @@
-package org.dnd;
+package org.dnd.character;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.dnd.character.Character;
+import org.dnd.character.classes.Class.ClassType;
+import org.dnd.character.races.Race.RaceType;
 import org.junit.Test;
 
 public class CharacterTest {
@@ -152,5 +156,17 @@ public class CharacterTest {
 		Character me = new Character();
 		me.addExperience(2000);
 		assertEquals(15, me.getHP());
+	}
+	
+	@Test
+	public void testHumanRoguesAgeIsBetween16and19() throws Exception {
+		int age = new Character("", ClassType.ROGUE, RaceType.HUMAN).getAge();
+		assertTrue(age >= 16 && age <= 19);
+	}
+	
+	@Test
+	public void testHumanFightersAgeIsBetween16and19() throws Exception {
+		int age = new Character("", ClassType.FIGHTER, RaceType.HUMAN).getAge();
+		assertTrue(age >= 16 && age <= 21);
 	}
 }

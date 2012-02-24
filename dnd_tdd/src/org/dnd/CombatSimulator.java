@@ -1,5 +1,7 @@
 package org.dnd;
 
+import org.dnd.character.Character;
+
 public class CombatSimulator {
 
 	public int fight(Character attacker, Character opponent, int attackRoll) {
