@@ -98,7 +98,8 @@ public class Character {
 		hitPoints.add(-hp);
 	}
 
-	public int getDefense() {
+	public int getArmor() {
+		//return 10 + armorBonus + shieldBonus + abilities.getModifier(abilities.getDexterity()) + sizeModifier;
 		return Math.max(0, armor.getArmor() + abilities.getModifier(abilities.getDexterity()));
 	}
 

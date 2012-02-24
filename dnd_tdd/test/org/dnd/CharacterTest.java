@@ -84,53 +84,6 @@ public class CharacterTest {
 	}
 	
 	@Test
-	public void testCharacterAttackSucceeds_withRollExceedingArmorValue(){
-		Character questCharacter = new Character();
-		int roll = questCharacter.getDefense() + 1;
-		assertEquals(1, questCharacter.attack(roll, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackSucceeds_withRollMeetingArmorValue(){
-		Character questCharacter = new Character();
-		int roll = questCharacter.getDefense();
-		assertEquals(1, questCharacter.attack(roll, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackFails_withRollLessThanArmorValue(){
-		Character questCharacter = new Character();
-		int roll = questCharacter.getDefense() - 1;
-		assertEquals(0, questCharacter.attack(roll, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackSucceeds_withHighRoll(){
-		assertEquals(4, new Character().attack(20, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackSucceedsAndDefendersHpIsDecrementedByOne() throws Exception {
-		Character you = new Character();
-		new Character().attack(19, you);
-		assertEquals(4, you.getHP());
-	}
-	
-	@Test
-	public void testCharacterAttackDoesntSucceedDefendersHpIsNotDecremented() throws Exception {
-		Character you = new Character();
-		new Character().attack(0, you);
-		assertEquals(5, you.getHP());
-	}
-	
-	@Test
-	public void testNaturalTwentyDealsDoubleDamage() throws Exception {
-		Character you = new Character();
-		new Character().attack(20, you);
-		assertEquals(1, you.getHP());
-	}
-	
-	@Test
 	public void testWhenHPIsLessThanOneCharacterIsDead() throws Exception {
 		Character questCharacter = new Character();
 		questCharacter.setHP(0);

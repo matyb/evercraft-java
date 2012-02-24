@@ -4,7 +4,11 @@ public class CombatSimulator {
 
 	public int fight(Character attacker, Character opponent, int attackRoll) {
 		int damageDone = 0;
-		if(isAttackSuccessful(getModifiedAttackRoll(attacker, attackRoll), opponent)){			
+		// A natural one on an attack roll is always a miss
+		if(attackRoll == 1) {
+			return 0;
+		}
+		if(attackRoll == 20 || isAttackSuccessful(getModifiedAttackRoll(attacker, attackRoll), opponent)){			
 			// A "Natural" Roll of 20 is a Critical Hit
 			if(attackRoll == 20) {
 				damageDone += getModifiedDamage(attacker, 2, true);
@@ -18,7 +22,7 @@ public class CombatSimulator {
 	}
 
 	private boolean isAttackSuccessful(int attackRoll, Character opposingCharacter) {
-		return attackRoll >= opposingCharacter.getDefense();
+		return attackRoll >= opposingCharacter.getArmor();
 	}
 
 	public int getModifiedDamage(Character attacker, int damage, boolean crit) {

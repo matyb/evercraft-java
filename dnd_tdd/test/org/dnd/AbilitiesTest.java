@@ -71,21 +71,21 @@ public class AbilitiesTest {
 	@Test
 	public void testDexterityModifierAddedToArmorClass_DefaultNoBonus() throws Exception {
 		Character me = new Character();
-		assertEquals(10, me.getDefense());
+		assertEquals(10, me.getArmor());
 	}
 	
 	@Test
 	public void testDexterityModifierAddedToArmorClass_HighBound() throws Exception {
 		Character me = new Character();
 		me.setDexterity(20);
-		assertEquals(15, me.getDefense());
+		assertEquals(15, me.getArmor());
 	}
 	
 	@Test
 	public void testDexterityModifierAddedToArmorClass_LowBound() throws Exception {
 		Character me = new Character();
 		me.setDexterity(1);
-		assertEquals(5, me.getDefense());
+		assertEquals(5, me.getArmor());
 	}
 	
 	@Test
@@ -93,7 +93,7 @@ public class AbilitiesTest {
 		Character me = new Character();
 		me.setDefense(1);
 		me.setDexterity(1);
-		assertEquals(0, me.getDefense());
+		assertEquals(0, me.getArmor());
 	}
 	
 	@Test
