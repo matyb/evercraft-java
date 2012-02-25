@@ -1,10 +1,12 @@
-package org.dnd;
+package org.dnd.character;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.dnd.character.Abilities;
+import org.dnd.character.Character;
 import org.junit.Test;
 
 
@@ -42,30 +44,6 @@ public class AbilitiesTest {
 					scoreModifier.getValue(), (Integer)abilities.getModifier(scoreModifier.getKey()));
 		}
 	}
-	
-	@Test
-	public void testStrengthModifierAddsToRoll() throws Exception {
-		Character questCharacter = new Character();
-		questCharacter.setStrength(20);
-		int roll = 10;
-		assertEquals(roll + 5, questCharacter.getModifiedRoll(roll));
-	}
-	
-	@Test
-	public void testStrengthModifierCantMakeRollGreaterThan20() throws Exception {
-		Character questCharacter = new Character();
-		questCharacter.setStrength(20);
-		int roll = 16;
-		assertEquals(20, questCharacter.getModifiedRoll(roll));
-	}
-	
-	@Test
-	public void testStrengthModifierCantMakeRollLowerThan0() throws Exception {
-		Character questCharacter = new Character();
-		questCharacter.setStrength(1);
-		int roll = 4;
-		assertEquals(0, questCharacter.getModifiedRoll(roll));
-	}
 
 	@Test
 	public void testStrengthModifierAddsToDamageDealt() throws Exception {
@@ -85,14 +63,6 @@ public class AbilitiesTest {
 	}
 	
 	@Test
-	public void testStrengthModifierDoublesOnCriticalHits() throws Exception {
-		Character me = new Character();
-		Character you = new Character();
-		me.setStrength(12);
-		assertEquals(4, me.attack(20, you));
-	}
-	
-	@Test
 	public void testStrengthModifierCantMakeDamageLessThan1EvenOnCrit() throws Exception {
 		Character me = new Character();
 		Character you = new Character();
@@ -103,21 +73,21 @@ public class AbilitiesTest {
 	@Test
 	public void testDexterityModifierAddedToArmorClass_DefaultNoBonus() throws Exception {
 		Character me = new Character();
-		assertEquals(10, me.getDefense());
+		assertEquals(10, me.getArmor());
 	}
 	
 	@Test
 	public void testDexterityModifierAddedToArmorClass_HighBound() throws Exception {
 		Character me = new Character();
 		me.setDexterity(20);
-		assertEquals(15, me.getDefense());
+		assertEquals(15, me.getArmor());
 	}
 	
 	@Test
 	public void testDexterityModifierAddedToArmorClass_LowBound() throws Exception {
 		Character me = new Character();
 		me.setDexterity(1);
-		assertEquals(5, me.getDefense());
+		assertEquals(5, me.getArmor());
 	}
 	
 	@Test
@@ -125,7 +95,7 @@ public class AbilitiesTest {
 		Character me = new Character();
 		me.setDefense(1);
 		me.setDexterity(1);
-		assertEquals(0, me.getDefense());
+		assertEquals(0, me.getArmor());
 	}
 	
 	@Test

@@ -1,7 +1,8 @@
-package org.dnd;
+package org.dnd.character;
 
 import static org.junit.Assert.*;
 
+import org.dnd.character.Character;
 import org.junit.Test;
 
 public class ExperienceTest {
