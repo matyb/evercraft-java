@@ -1,8 +1,12 @@
-package org.dnd;
+package org.dnd.character;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.dnd.character.Character;
+import org.dnd.character.classes.Class.ClassType;
+import org.dnd.character.races.Race.RaceType;
 import org.junit.Test;
 
 public class CharacterTest {
@@ -84,53 +88,6 @@ public class CharacterTest {
 	}
 	
 	@Test
-	public void testCharacterAttackSucceeds_withRollExceedingArmorValue(){
-		Character questCharacter = new Character();
-		int roll = questCharacter.getDefense() + 1;
-		assertEquals(1, questCharacter.attack(roll, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackSucceeds_withRollMeetingArmorValue(){
-		Character questCharacter = new Character();
-		int roll = questCharacter.getDefense();
-		assertEquals(1, questCharacter.attack(roll, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackFails_withRollLessThanArmorValue(){
-		Character questCharacter = new Character();
-		int roll = questCharacter.getDefense() - 1;
-		assertEquals(0, questCharacter.attack(roll, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackSucceeds_withHighRoll(){
-		assertEquals(2, new Character().attack(20, new Character()));
-	}
-	
-	@Test
-	public void testCharacterAttackSucceedsAndDefendersHpIsDecrementedByOne() throws Exception {
-		Character you = new Character();
-		new Character().attack(19, you);
-		assertEquals(4, you.getHP());
-	}
-	
-	@Test
-	public void testCharacterAttackDoesntSucceedDefendersHpIsNotDecremented() throws Exception {
-		Character you = new Character();
-		new Character().attack(0, you);
-		assertEquals(5, you.getHP());
-	}
-	
-	@Test
-	public void testNaturalTwentyDealsDoubleDamage() throws Exception {
-		Character you = new Character();
-		new Character().attack(20, you);
-		assertEquals(3, you.getHP());
-	}
-	
-	@Test
 	public void testWhenHPIsLessThanOneCharacterIsDead() throws Exception {
 		Character questCharacter = new Character();
 		questCharacter.setHP(0);
@@ -202,16 +159,14 @@ public class CharacterTest {
 	}
 	
 	@Test
-	public void testForEveryEvenLevelAddOneToRoll_EvenLevel() throws Exception {
-		Character me = new Character();
-		me.addExperience(1000);
-		assertEquals(11, me.getModifiedRoll(10));
+	public void testHumanRoguesAgeIsBetween16and19() throws Exception {
+		int age = new Character("", ClassType.ROGUE, RaceType.HUMAN).getAge();
+		assertTrue(age >= 16 && age <= 19);
 	}
 	
 	@Test
-	public void testForEveryEvenLevelAddOneToRoll_OddLevel() throws Exception {
-		Character me = new Character();
-		me.addExperience(2000);
-		assertEquals(11, me.getModifiedRoll(10));
+	public void testHumanFightersAgeIsBetween16and19() throws Exception {
+		int age = new Character("", ClassType.FIGHTER, RaceType.HUMAN).getAge();
+		assertTrue(age >= 16 && age <= 21);
 	}
 }

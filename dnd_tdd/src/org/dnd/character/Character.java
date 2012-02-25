@@ -1,27 +1,59 @@
-package org.dnd;
+package org.dnd.character;
 
+import org.dnd.CombatSimulator;
+import org.dnd.character.classes.Class;
+import org.dnd.character.classes.Class.ClassType;
+import org.dnd.character.classes.Fighter;
+import org.dnd.character.classes.Rogue;
+import org.dnd.character.races.Human;
+import org.dnd.character.races.Race;
+import org.dnd.character.races.Race.RaceType;
+import org.dnd.util.Dice;
 import org.dnd.util.Range;
 
 public class Character {
 
+	private static enum Gender { MALE, FEMALE };
+	
+	private Gender gender;
+	private int weight; // lbs
+	private int height; // inches
+	private int age;
+	private Class classType;
+	private Race raceType;
 	private String name;
 	private Range hitPoints;
-	private Armor armor;
+	private Defense armor;
 	private Experience xp;
 	private Alignment alignment;
 	private Abilities abilities;
+
+	public Abilities getAbilities() {
+		return abilities;
+	}
+
+	public void setAbilities(Abilities abilities) {
+		this.abilities = abilities;
+	}
 
 	public Character(){
 		this("");
 	};
 	
 	public Character(String name) {
+		this(name, ClassType.DEFAULT, RaceType.DEFAULT);
+	}
+
+	public Character(String name, ClassType classType, RaceType raceType) {
 		this.setName(name);
-		this.setArmor(new Armor());
+		this.setArmor(new Defense());
+		this.classType = Class.getClassFromMap(classType);
+		this.raceType  = Race.getRaceFromMap(raceType);
 		this.alignment = new Alignment(0);
-		this.hitPoints = new Range(0, 5, Integer.MAX_VALUE);
+		this.hitPoints = new Range(0, this.classType.getHPModifier(), Integer.MAX_VALUE);
 		this.abilities = new Abilities(10);
 		this.xp = new Experience(0);
+		this.setAge(generateAge());
 	}
 	
 	public String getName() {
@@ -68,66 +100,31 @@ public class Character {
 	}
 	
 	protected void levelGained(){
-		hitPoints.add(5 + abilities.getModifier(getConstitution()));
+		hitPoints.add(classType.getHPModifier() + abilities.getModifier(getConstitution()));
 	}
 
-	public int attack(int roll, Character opposingCharacter) {
-		int damageDone = 0;
-		if(isAttackSuccessful(getModifiedRoll(roll), opposingCharacter)){			
-			// A "Natural" Roll of 20 is a Critical Hit
-			if(roll == 20) {
-				damageDone += getModifiedDamage(2, true);
-			} else {
-				damageDone += getModifiedDamage(1, false);
-			}
-			addExperience(10);
-		}
-		opposingCharacter.decrementHP(damageDone);
-		return damageDone;
-	}
-
-	private boolean isAttackSuccessful(int roll, Character questCharacter) {
-		return roll >= questCharacter.getDefense();
-	}
-
-	private int getModifiedDamage(int damage, boolean crit) {
-		int stengthModifier = abilities.getModifier(abilities.getStrength());
-		int strengthMultiplier = crit ? 2 : 1;
-		damage += stengthModifier * strengthMultiplier;
-		return Math.max(1, damage);
-	}
-	
-	public int getModifiedRoll(int roll) {
-		int modifiedRoll = roll + abilities.getModifier(abilities.getStrength());
-		
-		if(modifiedRoll > 0) {
-			modifiedRoll = Math.min(modifiedRoll, 20);
-		} else {
-			modifiedRoll = 0;
-		}
-		
-		modifiedRoll += Math.floor(getLevel() / 2);
-		
-		return modifiedRoll;
+	public int attack(int attackRoll, Character opposingCharacter) {
+		return new CombatSimulator().fight(this, opposingCharacter, attackRoll);
 	}
 
 	public int getLevel() {
 		return xp.getLevel();
 	}
 
-	private void decrementHP(int hp) {
+	public void decrementHP(int hp) {
 		hitPoints.add(-hp);
 	}
 
-	public int getDefense() {
-		return Math.max(0, armor.getDefense() + abilities.getModifier(abilities.getDexterity()));
+	public int getArmor() {
+		//return 10 + armorBonus + shieldBonus + abilities.getModifier(abilities.getDexterity()) + sizeModifier;
+		return Math.max(0, armor.getArmor() + abilities.getModifier(abilities.getDexterity()));
 	}
 
 	public void setDefense(int defense) {
-		armor.setDefense(defense);
+		armor.setArmor(defense);
 	}
 	
-	public void setArmor(Armor armor) {
+	public void setArmor(Defense armor) {
 		this.armor = armor;
 	}
 
@@ -151,6 +148,15 @@ public class Character {
 	
 	public boolean isDead() {
 		return getHP() <= 0;
+	}		
+	
+	private int generateAge() {
+		if(raceType.getClass() == Human.class && classType.getClass() == Rogue.class) {
+			return Dice.roll(1, 4, 15);
+		} else if(raceType.getClass() == Human.class && classType.getClass() == Fighter.class) {
+			return Dice.roll(1, 6, 15);
+		}
+		return 0 ;
 	}
 
 	public int getStrength() {
@@ -187,5 +193,29 @@ public class Character {
 
 	public void setConstitution(int constitution) {
 		abilities.setConstitution(constitution);
+	}
+
+	public Class getClassType() {
+		return classType;
+	}
+
+	public void setClassType(Class classType) {
+		this.classType = classType;
+	}
+
+	public Race getRaceType() {
+		return raceType;
+	}
+
+	public void setRaceType(Race raceType) {
+		this.raceType = raceType;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 }
